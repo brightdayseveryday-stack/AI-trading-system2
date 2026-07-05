@@ -13,7 +13,7 @@
 
 ```mermaid
 flowchart LR
-    subgraph A1[\"โหมด A — สร้างโมเดล\"]
+    subgraph A1[\โหมด A — สร้างโมเดล\]
         H1[XAUUSD_H1.csv] --> R[Step 0a-68]
         R --> F[Step70 Freeze]
         F --> PKL[FrozenModel.pkl]
