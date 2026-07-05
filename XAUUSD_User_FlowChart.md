@@ -11,28 +11,26 @@
 | **A — สร้างและทดสอบระบบ** | ครั้งแรก / retrain / ก่อน live | สร้างโมเดล 0a→70 Freeze แล้ว**สร้างและเทสระบบถึง Step100** จากนั้นเพิ่ม 107/108 |
 | **B — รันจริง / เปิดออเดอร์** | ทุกวัน / 24 ชม. (หลัง A เสร็จ) | **คลิกขวารัน Step108** |
 
-
 ```mermaid
-
 flowchart LR
-    subgraph A1 ["โหมด A — สร้างโมเดล"]
-        H1[XAUUSD_H1.csv] --> R[Step 0a-68]
+    subgraph A1["โหมด A - สร้างโมเดล"]
+        H1[XAUUSD_H1.csv] --> R["Step 0a-68"]
         R --> F[Step70 Freeze]
         F --> PKL[FrozenModel.pkl]
     end
-    subgraph A2 ["โหมด A — สร้างระบบถึง 100"]
-        PKL --> G[Step 73-100]
-        G --> P101[Step 101-106]
+    subgraph A2["โหมด A - สร้างระบบถึง 100"]
+        G[Step 73-100] --> P101[Step 101-106]
         P101 --> AUTO[Step 107-108]
     end
-    subgraph B ["โหมด B — ใช้งานจริง"]
-        AUTO --> RUN[คลิกขวารัน 108]
-        RUN --> MT5[MT5 Order]
+    subgraph B1["โหมด B - ใช้งานจริง"]
+        RUN[คลิกขวารัน 108] --> MT5[MT5 Order]
     end
-
+    PKL --> G
+    AUTO --> RUN
 ```
 
 > **สำคัญ:** โหมด A ไม่ได้จบที่ Step72 — ต้องสร้างไฟล์และเทสรันไปจนถึง **Step100** ก่อน แล้วค่อยเพิ่ม **Step107/108** ให้เป็นระบบอัตโนมัติ → ถึงตอนนั้นถึงจะเข้าโหมด B ได้
+
 ---
 
 ## ไฟล์สำคัญ (ไม่ใช่ Step)
@@ -57,25 +55,25 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    START([เริ่ม: XAUUSD_H1.csv]) --> P1
+    START([เริ่ม XAUUSD_H1.csv]) --> P1
 
-    subgraph P1[\"ช่วง 1 — สร้างโมเดล (0a→70)\"]
+    subgraph P1["ช่วง 1 - สร้างโมเดล 0a-70"]
         S0a[0a] --> S68[68] --> S70[70 FREEZE]
     end
 
     P1 --> P2
 
-    subgraph P2[\"ช่วง 2 — สร้างระบบ Live (71→100)\"]
-        S71[71-72 Governance] --> S73[73-81 Daily Gov]
+    subgraph P2["ช่วง 2 - สร้างระบบ Live 71-100"]
+        S71[71-72 Gov] --> S73[73-81 Daily]
         S73 --> S82[82-92 Deploy]
-        S82 --> S93[93-100 Pipeline+Cert]
+        S82 --> S93[93-100 Cert]
     end
 
     P2 --> P3
 
-    subgraph P3[\"ช่วง 3 — อัตโนมัติ (101→108)\"]
-        S101[101-106 Trading parts] --> S107[107 Daily runner]
-        S107 --> S108[108 Production runner]
+    subgraph P3["ช่วง 3 - อัตโนมัติ 101-108"]
+        S101[101-106] --> S107[107 Daily]
+        S107 --> S108[108 Production]
     end
 
     P3 --> READY([พร้อมโหมด B])
