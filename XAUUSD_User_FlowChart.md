@@ -18,12 +18,12 @@ flowchart LR
         R --> F[Step70 Freeze]
         F --> PKL[FrozenModel.pkl]
     end
-    subgraph A2[\"โหมด A — สร้างระบบถึง 100\"]
+    subgraph A2[\โหมด A — สร้างระบบถึง 100\]
         PKL --> G[Step 73-100]
         G --> P101[Step 101-106]
         P101 --> AUTO[Step 107-108]
     end
-    subgraph B[\"โหมด B — ใช้งานจริง\"]
+    subgraph B[\โหมด B — ใช้งานจริง\]
         AUTO --> RUN[คลิกขวารัน 108]
         RUN --> MT5[MT5 Order]
     end
